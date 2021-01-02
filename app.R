@@ -1,7 +1,7 @@
 library(shiny)
 library(leaflet)
 
-load("data/mapinfo.RData")
+load("/data/mapinfo.RData")
 
 ui <- fluidPage(
   
