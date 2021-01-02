@@ -15,12 +15,15 @@ OR type cd /d/OneDrive/R_Sharepoint/57_docker/metdata in gitbash
 
 once inside the correct local repository on gitbash clone it and then use the following sequence to update
 
+git init . (I think)
+
 git add .
 
 git commit -m "details of the change"
 
 git push origin branchname
 
+https://training.github.com/downloads/github-git-cheat-sheet.pdf
 
 
 

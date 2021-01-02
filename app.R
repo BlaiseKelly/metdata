@@ -1,7 +1,9 @@
 library(shiny)
 library(leaflet)
 
-load("/data/mapinfo.RData")
+load("~/data/mapinfo.RData")
+
+#options(shiny.fullstacktrace = TRUE)
 
 ui <- fluidPage(
   

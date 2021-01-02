@@ -1,0 +1,12 @@
+name: metdata
+title: metdata
+username:
+account: blaiser
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3439059
+bundleId: 4050877
+url: https://blaiser.shinyapps.io/metdata/
+when: 1609605088.52918
+asMultiple: FALSE
+asStatic: FALSE
