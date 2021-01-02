@@ -1,23 +1,13 @@
 library(tidyverse)
 library(shiny)
-library(sf)
 library(leaflet)
-library(lubridate)
-library(openair)
-library(worldmet)
-library(mapview)
-library(rnaturalearth)
-library(rnaturalearthdata)
-library(rgeos)
+
 
 ##set the code for ukgrid and lat lon conversions
 ukgrid <- "+init=epsg:27700"
 latlong <- "+init=epsg:4326"
 
 load("data/mapinfo.RData")
-
-d8 <- year(Sys.Date())
-
 
 ui <- fluidPage(
   
