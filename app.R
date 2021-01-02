@@ -1,6 +1,5 @@
 library(shiny)
 library(leaflet)
-library(sf)
 
 load("data/mapinfo.RData")
 
