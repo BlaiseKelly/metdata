@@ -72,4 +72,6 @@ rain_data <- rain_data[2,]
 lats <- sort(unique(ecmwf_areas$lat))
 lons <- sort(unique(ecmwf_areas$lon))
 
-save(met_info, met_codes, land_areas, ecmwf, ecmwf_areas, rain_data, lats, lons, file = "mapinfo.RData")
+d8 <- year(Sys.Date())
+
+save(met_info, met_codes, land_areas, ecmwf, ecmwf_areas, rain_data, lats, lons, d8, file = "mapinfo.RData")
