@@ -57,16 +57,6 @@ ui <- fluidPage(
 
 server <- shinyServer(function(input, output) {
 
-  # ecmwf_areas <- readRDS("data/land_areas.RDS")
-  # ecmwf <- st_centroid(ecmwf_areas)
-  # ecmwf <- st_cast(ecmwf, "POINT")
-  
-  #met_stations <- read.csv("data/weather_stations.csv", header = FALSE)
-  #EU_codez <- readRDS("data/codez.RDS")
-  #met_info <- getMeta(country = met_stations$V1)
-  #met_info2 <- getMeta(country = EU_codez)
-  
-  
   
   cntnt_met <- paste(paste(
     met_info$station,
@@ -111,12 +101,6 @@ server <- shinyServer(function(input, output) {
   lat <- 51.456481
   lon <- -2.586347
   
-  # pal = colorBin("viridis", bins = c(0, 2000, 4000, 6000, 8000, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000,300000), domain = routez$total_t)
-  # pal_t <- colorFactor(pal = c("red","green"), 
-  #                      domain = c("HIGHER", "LOWER")) 
-  # pal_s <- colorFactor(pal = c("green","red"), 
-  #                      domain = c("HIGHER", "LOWER")) 
-  
   html_legend <- "<img src='data/Raindrop.png'style='width:30px;height:30px;'> EA Rain Gauges<br/>
 <img src='data/weather_station.png'style='width:30px;height:30px;'> NOAA Met Stations<br/>
 <img src='data/satellite.ico'style='width:30px;height:30px;'> ERA-5 Satellite data"
@@ -129,8 +113,6 @@ server <- shinyServer(function(input, output) {
       addProviderTiles("CartoDB.Positron", group = "CartoDB") %>%
       addProviderTiles("Esri.WorldImagery", group = "Esri Satellite") %>%
       addProviderTiles("OpenStreetMap", group = "Open Street Map") %>% 
-      leafem::addMouseCoordinates(proj4string = CRS(ukgrid), native.crs = F) %>%
-      addMiniMap() %>%
       addMarkers(data = rain_data,
                  icon = rainfall_icon, popup = cntnt_rain, group = "rainfall") %>%
       addMarkers(data = met_info,
