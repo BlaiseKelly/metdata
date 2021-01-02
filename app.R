@@ -14,64 +14,7 @@ library(rgeos)
 ukgrid <- "+init=epsg:27700"
 latlong <- "+init=epsg:4326"
 
-##find the max and min range of the vgt network
-x_min <- -25-0.125
-x_max <- 42
-y_min <- 31-0.125
-y_max <- 71
-
-##create a data frame to setup a polygon generation
-df <- data.frame(X = c(x_min, x_max, x_max, x_min), 
-                 Y = c(y_max, y_max, y_min, y_min))
-##generate a polygon of the area
-vgt_area <- df %>%
-  st_as_sf(coords = c("X", "Y"), crs = latlong) %>%
-  dplyr::summarise(geometry = st_combine(geometry)) %>%
-  st_cast("POLYGON")
-
-## size of squares, in units of the CRS (i.e. meters for ukgrid)
-grid_spacing <- 0.25
-##create gridded area
-split_area <- st_make_grid(vgt_area, square = T, cellsize = c(grid_spacing, grid_spacing)) %>% # the grid, covering bounding box
-  st_sf() # not really required, but makes the grid nicer to work with later
-
-
-world <- ne_countries(scale = "medium", returnclass = "sf")
-
-# Member States of the European Union
-# europeanUnion <- c("Austria","Belgium","Bulgaria", "Bosnia and Herzegovina", "Croatia","Cyprus",
-#                    "Denmark","Estonia","Finland","France", "Belarus", "Ukraine", "Russia",
-#                    "Germany","Greece","Hungary","Ireland","Italy","Latvia", "Iceland",
-#                    "Lithuania","Luxembourg","Malta","Netherlands","Poland",
-#                    "Portugal","Romania","Slovakia","Slovenia","Spain", "Republic of Serbia", "Kosovo", "Montenegro", "Moldova",
-#                    "Sweden","United Kingdom", "Switzerland", "Norway", "Czech Republic", "Macedonia", "Albania")
-europeanUnion <- "United Kingdom"
-# Select only the index of states member of the E.U.
-EU <- filter(world, sovereignt %in% europeanUnion)
-
-#met_stations <- read.csv("data/weather_stations.csv", header = FALSE)
-#EU_codez <- readRDS("data/codez.RDS")
-met_info <- getMeta(country = "UK")
-#met_info <- filter(met_info, ctry == "UK")
-met_info <- met_info[3,]
-met_codes <- unique(met_info$code)
-
-land_areas <- split_area[EU,]
-land_areas$centre <- st_centroid(land_areas$geometry)
-lat_lon <- st_centroid(land_areas)
-lat_lon <- st_coordinates(lat_lon)
-land_areas$lat <- lat_lon[,2]
-land_areas$lon <- lat_lon[,1]
-
-ecmwf_areas <- land_areas[3,]
-ecmwf <- st_centroid(ecmwf_areas)
-ecmwf <- st_cast(ecmwf, "POINT")
-
-rain_data <- st_read("https://drive.google.com/uc?export=download&id=12l-VzbxujqAUYKcbzJxe2jI5al9cmS3b", quiet = TRUE)
-rain_data <- rain_data[2,]
-
-lats <- sort(unique(ecmwf_areas$lat))
-lons <- sort(unique(ecmwf_areas$lon))
+load("data/mapinfo.RData")
 
 d8 <- year(Sys.Date())
 
